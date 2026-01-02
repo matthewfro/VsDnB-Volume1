@@ -48,6 +48,7 @@ jobs:
           haxelib install hxjsonast
           haxelib install hxCodec
           haxelib install hxvlc
+          haxelib install polymod
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -86,6 +87,7 @@ jobs:
           haxelib install hxjsonast
           haxelib install hxCodec
           haxelib install hxvlc
+          haxelib install polymod
           haxelib list
         shell: cmd
       - name: Create Version Tag
@@ -125,6 +127,7 @@ jobs:
           haxelib install hxjsonast
           haxelib install hxCodec
           haxelib install hxvlc
+          haxelib install polymod
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
