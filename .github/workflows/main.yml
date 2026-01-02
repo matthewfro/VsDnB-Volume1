@@ -33,6 +33,9 @@ jobs:
         run: |
           sudo apt-get install libvlc-dev libvlccore-dev glibc-source libidn-dev libidn12
           haxelib setup ~/haxelib
+          haxelib install hmm
+          haxelib run hmm setup
+          hmm install
           haxelib install hxcpp > /dev/null --quiet
           haxelib install lime
           haxelib install openfl
@@ -45,6 +48,7 @@ jobs:
           haxelib install hxjsonast
           haxelib install hxCodec
           haxelib install hscript-iris
+          haxelib install hxvlc
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib list
       - name: Create Version Tag
@@ -70,6 +74,9 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
+          haxelib install hmm
+          haxelib run hmm setup
+          hmm install
           haxelib install hxcpp > /dev/null --quiet
           haxelib install lime
           haxelib install openfl
@@ -82,6 +89,7 @@ jobs:
           haxelib install hxjsonast
           haxelib install hxCodec
           haxelib install hscript-iris
+          haxelib install hxvlc
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib list
         shell: cmd
@@ -95,7 +103,7 @@ jobs:
           name: windowsBuild
           path: export/release/windows/bin
   buildMac:
-    runs-on: macos-12
+    runs-on: macos-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -108,6 +116,9 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
+          haxelib install hmm
+          haxelib run hmm setup
+          hmm install
           haxelib install hxcpp > /dev/null --quiet
           haxelib install lime
           haxelib install openfl
@@ -118,8 +129,9 @@ jobs:
           haxelib install actuate
           haxelib install tjson
           haxelib install hxjsonast
+          haxelib install hxCodec
           haxelib install hscript-iris
-          haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
+          haxelib install hxvlc
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib list
       - name: Create Version Tag
