@@ -49,6 +49,7 @@ jobs:
           haxelib install hxCodec
           haxelib install hxvlc
           haxelib install polymod
+          haxelib install json2object
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -88,6 +89,7 @@ jobs:
           haxelib install hxCodec
           haxelib install hxvlc
           haxelib install polymod
+          haxelib install json2object
           haxelib list
         shell: cmd
       - name: Create Version Tag
@@ -128,6 +130,7 @@ jobs:
           haxelib install hxCodec
           haxelib install hxvlc
           haxelib install polymod
+          haxelib install json2object
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
