@@ -52,6 +52,7 @@ jobs:
           haxelib install json2object
           haxelib install hxdiscord_rpc
           haxelib install flxanimate
+          haxelib install hscript
           haxelib git funkin.vis https://github.com/FunkinCrew/funkVis
           haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git
           haxelib list
@@ -96,6 +97,7 @@ jobs:
           haxelib install json2object
           haxelib install hxdiscord_rpc
           haxelib install flxanimate
+          haxelib install hscript
           haxelib git funkin.vis https://github.com/FunkinCrew/funkVis
           haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git
           haxelib list
@@ -141,6 +143,7 @@ jobs:
           haxelib install json2object
           haxelib install hxdiscord_rpc
           haxelib install flxanimate
+          haxelib install hscript
           haxelib git funkin.vis https://github.com/FunkinCrew/funkVis
           haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git
           haxelib list
