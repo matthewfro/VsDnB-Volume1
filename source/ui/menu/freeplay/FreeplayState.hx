@@ -172,7 +172,7 @@ class FreeplayState extends MusicBeatState
 	/**
 	 * The metadata of all of the songs being displayed in the category the user's on.
 	 */
-	var songs:Array<SongMetadata> = [];
+	var songs:Array<FreeplaySongData> = [];
 	
 	/**
 	 * The background under `scoreText`
@@ -821,7 +821,7 @@ class FreeplayState extends MusicBeatState
 		var songData:Song = SongRegistry.instance.fetchEntry(song.id);
 		var songIcon:String = song.icon ?? CharacterRegistry.instance.fetchData(songData.getChart(Song.DEFAULT_VARIATION).opponent).icon;
 
-		songs.push(new SongMetadata(songData, song.week ?? -1, songIcon, song.color[0]));
+		songs.push(new FreeplaySongData(songData, song.week ?? -1, songIcon, song.color[0]));
 	}
 
 	public function addWeek(songs:Array<CategorySong>)
@@ -945,7 +945,7 @@ class FreeplayState extends MusicBeatState
 
 		var songIcon:HealthIcon = grpIcons.members[index];
 		var songText:FreeplayAlphabet = grpSongs.members[index];
-		var songMetadata:SongMetadata = songs[index];
+		var songMetadata:FreeplaySongData = songs[index];
 		
 		SoundController.play(Paths.sound('freeplay/unlockRiser'), 0.8);
 
@@ -1029,7 +1029,7 @@ class FreeplayState extends MusicBeatState
 	}
 }
 
-class SongMetadata
+class FreeplaySongData
 {
 	public var song:Song = null;
 	public var week:Int = 0;
@@ -1054,14 +1054,14 @@ class SongMetadata
 
 class FreeplayAlphabet extends Alphabet
 {
-	public var metadata:SongMetadata;
+	public var metadata:FreeplaySongData;
 
 	public var onUpdate:Float->Void;
 	public var onStepHit:Void->Void;
 	public var onBeatHit:Void->Void;
 	public var onMeasureHit:Void->Void;
 
-	public function new(metadata:SongMetadata)
+	public function new(metadata:FreeplaySongData)
 	{
 		this.metadata = metadata;
 		
