@@ -37,6 +37,7 @@ jobs:
           haxelib install hmm
           haxelib run hmm setup
           hmm install
+          haxelib install lime
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -64,6 +65,7 @@ jobs:
           haxelib install hmm
           haxelib run hmm setup
           hmm install
+          haxelib install lime
           haxelib list
         shell: cmd
       - name: Create Version Tag
@@ -92,6 +94,7 @@ jobs:
           haxelib install hmm
           haxelib run hmm setup
           hmm install
+          haxelib install lime
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
