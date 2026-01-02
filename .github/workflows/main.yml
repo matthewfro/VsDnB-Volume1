@@ -50,6 +50,7 @@ jobs:
           haxelib install hxvlc
           haxelib install polymod
           haxelib install json2object
+          haxelib install hxdiscord_rpc
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -90,6 +91,7 @@ jobs:
           haxelib install hxvlc
           haxelib install polymod
           haxelib install json2object
+          haxelib install hxdiscord_rpc
           haxelib list
         shell: cmd
       - name: Create Version Tag
@@ -131,6 +133,7 @@ jobs:
           haxelib install hxvlc
           haxelib install polymod
           haxelib install json2object
+          haxelib install hxdiscord_rpc
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
