@@ -217,7 +217,48 @@ class PlayState extends MusicBeatState
 	 * Changes the y position of all of the HUD elements based on this type.
 	 */
 	public var scrollType(default, set):String;
-	
+	var shaggyVocals:GameSound;
+	var isShaggyMode:Bool = false;
+	var mania:Int = 0;
+// ===================================================
+// AUTO BOTPLAY HIT SYSTEM (Vs D&B Volume 1)
+// ===================================================
+function botplayAutoHit():Void
+{
+    // Loop all spawned notes on the player's strumline
+    playingStrumline.forEachNote(function(note:Note)
+    {
+        if (note == null) return;
+
+        // Only player notes
+        if (!note.mustPress) return;
+
+        // Must be hittable
+        if (!note.canBeHit) return;
+
+        // Trigger correct hit system
+        playingStrumline.hitNote(note);
+
+        // Custom animation override (optional)
+        var anim = botGetSingAnim(note.direction);
+        playingChar.playAnim(anim, true);
+        playingChar.holdTimer = 0;
+    });
+}
+
+// return correct animation name
+function botGetSingAnim(dir:Int):String
+{
+    return switch (dir)
+    {
+        case 0: "singLEFT";
+        case 1: "singDOWN";
+        case 2: "singUP";
+        case 3: "singRIGHT";
+        default: "idle";
+    }
+}
+
 	function set_scrollType(value:String):String
 	{
 		if (dadStrums != null)
@@ -600,10 +641,13 @@ class PlayState extends MusicBeatState
 	var noteLimboFrames:Int;
 	var pressingKey5Global:Bool;
 
+	public var cpuControlled:Bool = false;
+
 	/**
 	 * Initalizes a new PlayState instance.
 	 * @param params The parameters to initalize PlayState with.
 	 */
+
 	public function new(?params:PlayStateParams)
 	{
 		super();
@@ -675,11 +719,8 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			// Pressing seven will enable custom callback functionaility. 
-			// Cancelling it will allow custom behavior that isn't going to the chart editor.
-			// Not sure if this is necessary to warrant it's own script event.
-
 			var event = new ScriptEvent(PRESS_SEVEN, true);
+
 			dispatchEvent(event);
 			
 			if (event.eventCanceled)
@@ -806,6 +847,13 @@ class PlayState extends MusicBeatState
 			}
 		});
 		
+		// ===================================================
+// BOTPLAY: auto-hit notes when cpuControlled is true
+// ===================================================
+if (cpuControlled)
+{
+    botplayAutoHit();
+}
 		handleInputs();
 		processNotes(elapsed);
 	}
@@ -1317,6 +1365,7 @@ class PlayState extends MusicBeatState
 		dadStrums.x = 100;
 		dadStrums.cameras = [camHUD];
 		dadStrums.generateNotes(currentChart.notes);
+		dadStrums.strumAmount = 4;
 		add(dadStrums);
 		dadStrums.onNoteSpawn.add(onStrumlineNoteSpawn);
 
@@ -1324,9 +1373,96 @@ class PlayState extends MusicBeatState
 		playerStrums.x = FlxG.width - playerStrums.width - 100;
 		playerStrums.cameras = [camHUD];
 		playerStrums.generateNotes(currentChart.notes);
+		playerStrums.strumAmount = 4;
 		add(playerStrums);
 		playerStrums.onNoteSpawn.add(onStrumlineNoteSpawn);
+
+		// If this is true it means that the current variation we're on is a custom one.
+		var customVariation:Bool = (this.currentVariation == Song.validateVariation(params.targetVariation) && this.currentVariation != Song.DEFAULT_VARIATION);
 		
+		var customChar:Null<String> = (PlayStatePlaylist.isStoryMode || FreeplayState.skipSelect.contains(currentSong.id.toLowerCase()) || customVariation) ? null : CharacterSelect.selectedCharacter;
+
+		var bfChar:String = bfOverride != null ? bfOverride : customChar != null ? customChar : currentChart.player;
+		boyfriend = Character.create(770, 450, bfChar, PLAYER);
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "warmup")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+		
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "house")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "insanity")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+				
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "polgonized")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "blocked")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "corn-theft")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+ 
+                if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "maze")
+		{
+			playerStrums.strumAmount = 9;
+			dadStrums.strumAmount = 9;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "splitathon")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "supernovea")
+		{
+			playerStrums.strumAmount = 9;
+			dadStrums.strumAmount = 9;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "glitch")
+		{
+			playerStrums.strumAmount = 9;
+			dadStrums.strumAmount = 9;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "master")
+		{
+			playerStrums.strumAmount = 12;
+			dadStrums.strumAmount = 12;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "roofs")
+		{
+			playerStrums.strumAmount = 7;
+			dadStrums.strumAmount = 7;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "mealie")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
 		opposingStrumline.onNoteHit.add(function(note:Note)
 		{
 			opponentSing(opposingChar, note);

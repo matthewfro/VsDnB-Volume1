@@ -98,6 +98,8 @@ class HudDisplay extends FlxSpriteGroup implements IHudItem
 	 */
 	public var textUpdateFunc:Float->Void;
 
+    public var botText:FlxText;
+
 	public function new(x:Float, params:HudDisplayParams)
 	{
 		if (params == null)
